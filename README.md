@@ -25,7 +25,7 @@ Several validation errors will show up:
 ```
 They always contain the line, the severity, a name of the triggered rule, the description of the validation error, and the path to the field in the OpenAPI definition.
 
-## Validation with quobix/vacuum
+## Validation with @quobix/vacuum
 
 [Vacuum](https://quobix.com/vacuum/) is a tool, which can be used for bundling and linting OpenAPI files.
 
