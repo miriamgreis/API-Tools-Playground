@@ -1,12 +1,12 @@
 # Playground for API Tools based on OpenAPI
 
-This repository can be used to test tools for validation and contract-testing based on OpenAPI.
-We use all tools via `npx`, so you don't have to install them and only need `npm`.
+This repository can be used to try out some tools for validation and contract-testing based on OpenAPI.
+We use all tools via `npx`, so you only need `npm` to run the examples.
 As sample API, we use the Swagger Petstore API.
 
 ## Validation with @stoplight/spectral-cli
 
-For validation, we can use [Spectral](https://github.com/stoplightio/spectral).
+[Spectral](https://github.com/stoplightio/spectral) is a tool that can be used to lint OpenAPI files and AsyncAPI files.
 
 Spectral takes the OpenAPI file and validates it against a ruleset in a file called `.spectral.yaml`. 
 You can use a recommended ruleset and write custom rules on top.
@@ -23,7 +23,27 @@ Several validation errors will show up:
 ```
 230:20  warning  operation-description       Operation "description" must be present and non-empty string.  paths./pet/{petId}.post.description
 ```
-They always contain the line, the severity, a name of the triggered rule, the description of the validation error and the path to the field in the OpenAPI definition.
+They always contain the line, the severity, a name of the triggered rule, the description of the validation error, and the path to the field in the OpenAPI definition.
+
+## Validation with quobix/vacuum
+
+[Vacuum](https://quobix.com/vacuum/) is a tool, which can be used for bundling and linting OpenAPI files.
+
+It is inspired by Spectral and compatible with custom Spectral rulesets.
+
+### Execution
+
+Execute the command to run the validation in your terminal in the root folder of the repository:
+```
+npx @quobix/vacuum lint --details openapi.yaml
+```
+`openapi.yaml` is the name of the OpenAPI file of our example in the repository.
+
+Several validation errors will show up:
+```
+openapi.yaml:812:5  | warning  | `securitySchemes` component `api_key` is missing a description                      | component-description      | Descriptions | $.components.securitySchemes['api_key']
+```
+They always contain the line, the severity, a description of the validation error, the name of the rule, the category, and the path to the field in the OpenAPI definition.
 
 ### How to Fix the Errors
 
