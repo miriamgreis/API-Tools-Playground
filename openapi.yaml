@@ -124,10 +124,11 @@ paths:
         - name: status
           in: query
           description: Status values that need to be considered for filter
-          required: true
+          required: false
           explode: true
           schema:
             type: string
+            default: available
             enum:
               - available
               - pending
@@ -163,7 +164,7 @@ paths:
         - name: tags
           in: query
           description: Tags to filter by
-          required: true
+          required: false
           explode: true
           schema:
             type: array
@@ -326,18 +327,6 @@ paths:
       summary: Returns pet inventories by status
       description: Returns a map of status codes to quantities
       operationId: getInventory
-      parameters:
-        - name: status
-          in: query
-          description: Status values that need to be considered for filter
-          required: true
-          explode: true
-          schema:
-            type: string
-            enum:
-              - available
-              - pending
-              - sold
       responses:
         '200':
           description: successful operation
@@ -638,8 +627,6 @@ components:
             - delivered
         complete:
           type: boolean
-      required:
-        - id
       xml:
         name: order
     Customer:
@@ -734,8 +721,8 @@ components:
         name: tag
     Pet:
       required:
-        - id
         - name
+        - photoUrls
       type: object
       properties:
         id:
