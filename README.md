@@ -1,19 +1,39 @@
 # Playground for API Tools based on OpenAPI
 
-This repository can be used to try out some tools for validation and contract-testing based on OpenAPI.
+This repository can be used to try out some tools for OpenAPI.
+Right now it contains examples for mocking, validation, and contract testing.
 We use all tools via `npx`, so you only need `npm` to run the examples.
 As sample API, we use the Swagger Petstore API.
 
+Just copy the commands to your terminal in the root folder of the repository and get started.
+
+## Mocking with @stoplight/prism-cli
+
+[Prism](https://github.com/stoplightio/prism) is a tool that can be used to easily create a mock server from your OpenAPI files.
+It additionally offers a validation proxy to add contract testing to existing test suites.
+
+### Execution for Mocking
+
+Execute the following command to start the mock server:
+```
+npx @stoplight/prism-cli mock openapi.yaml
+```
+
+In another terminal (or any other tool of your choice), you can now call the mock server:
+```
+curl http://127.0.0.1:4010/pet/1 --header "Authorization: Bearer 1234"
+```
+
 ## Validation with @stoplight/spectral-cli
 
-[Spectral](https://github.com/stoplightio/spectral) is a tool that can be used to lint OpenAPI files and AsyncAPI files.
+[Spectral](https://github.com/stoplightio/spectral) is a tool that can be used to validate OpenAPI files and AsyncAPI files.
 
 Spectral takes the OpenAPI file and validates it against a ruleset in a file called `.spectral.yaml`. 
 You can use a recommended ruleset and write custom rules on top.
 
 ### Execution
 
-Execute the command to run the validation in your terminal in the root folder of the repository:
+Execute the following command to validate the OpenAPI definition:
 ```
 npx @stoplight/spectral-cli lint openapi.yaml
 ```
@@ -27,13 +47,12 @@ They always contain the line, the severity, a name of the triggered rule, the de
 
 ## Validation with @quobix/vacuum
 
-[Vacuum](https://quobix.com/vacuum/) is a tool, which can be used for bundling and linting OpenAPI files.
-
+[Vacuum](https://quobix.com/vacuum/) is a tool, which can be used for bundling and validating OpenAPI files.
 It is inspired by Spectral and compatible with custom Spectral rulesets.
 
 ### Execution
 
-Execute the command to run the validation in your terminal in the root folder of the repository:
+Execute the following command to validate the OpenAPI definition:
 ```
 npx @quobix/vacuum lint --details openapi.yaml
 ```
@@ -65,15 +84,15 @@ Further tests and configurations can be added by modifying the configuration fil
 
 Newman is the command-line runner from Postman and runs the tests in the generated Postman collection.
 
-### Execution
+### Execution for Validation
 
-Execute the command to run the contract tests in your terminal in the root folder of the repository:
+Execute the following command to generate the Postman collection including tests.
 ```
 npx @apideck/portman --local openapi.yaml --portmanConfigFile portman-test-config.json --output postmanCollection.json
 ```
 
 `openapi.yaml` is the name of the OpenAPI file, `portman-test-config.json` is the name of the configuration file for the tests, and `postmanCollection.json` is the name of the generated postman collection.
-Run the contract test in your terminal in the same folder by passing the name of the generated postman collection:
+Run the contract test by passing the name of the generated postman collection:
 ```
 npx newman run postmanCollection.json --verbose
 ```
