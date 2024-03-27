@@ -182,7 +182,7 @@ For an API key, you might use the following snippet:
 ```json
 "securityOverwrites": {
     "apiKey": {
-        "value": "<your-api-key"
+        "value": "<your-api-key>"
     }
 }
 ```
