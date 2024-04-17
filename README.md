@@ -1,7 +1,7 @@
 # Playground for API Tools based on OpenAPI
 
 This repository can be used to try out some tools for OpenAPI.
-Right now it contains examples for mocking, validation, and contract testing.
+Right now it contains examples for mocking, validation, formatting and contract testing.
 We use all tools via `npx`, so you only need `npm` to run the examples.
 As sample API, we use the Swagger Petstore API.
 
@@ -69,6 +69,39 @@ They always contain the line, the severity, a description of the validation erro
 Start with one of the validation errors and try to identify the wrong field in the OpenAPI validation.
 Fix the validation error and run the validation again.
 In the best case, you shouldn't have any validation errors at the end.
+
+## Formatting with openapi-format
+
+[openapi-format](https://github.com/thim81/openapi-format) is a tool to order, format and filter fields in OpenAPI files. 
+This helps to create a more clean and optimizied OpenAPI file for public documentation.
+
+### Execution
+
+Execute the following command to sort your OpenAPI file by applying the default sort order of the tool:
+```
+npx openapi-format openapi.yaml --output openapi_formatted.yaml
+```
+Compare the two files to check for the changes.
+
+### Filtering Example
+
+Create a new file in the root folder of this repository called `customFilter.yaml`. 
+Then, add the following content to the file:
+```
+flags:
+  - x-internal
+```
+
+Open your OpenAPI file and place the `x-internal: true` flag on different elements. 
+Then run:
+```
+npx openapi-format openapi.yaml --output openapi_formated.yaml --filterFile customFilter.yaml
+```
+
+The newly formatted file should not contain any of the flagged elements.
+
+You can use many other filter options, and also pass other command line options such as `--sortFile` for a custom sort order or `--casingFile` to specify case settings. 
+Check the documentation of the tool for more details.
 
 ## Contract Testing with @apideck/portman
 
