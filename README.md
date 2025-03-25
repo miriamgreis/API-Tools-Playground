@@ -21,7 +21,7 @@ npx @stoplight/prism-cli mock openapi.yaml
 
 In another terminal (or any other tool of your choice), you can now call the mock server:
 ```
-curl http://127.0.0.1:4010/pet/1 --header "Authorization: Bearer 1234"
+curl http://127.0.0.1:4010/stations --header "Authorization: Bearer 1234"
 ```
 
 ## Validation with @stoplight/spectral-cli
@@ -41,9 +41,9 @@ npx @stoplight/spectral-cli lint openapi.yaml
 
 Several validation errors will show up:
 ```
-230:20  warning  operation-description       Operation "description" must be present and non-empty string.  paths./pet/{petId}.post.description
+2:6   warning  info-contact   Info object must have "contact" object.      info
 ```
-They always contain the line, the severity, a name of the triggered rule, the description of the validation error, and the path to the field in the OpenAPI definition.
+They always contain the line, the severity, a name of the triggered rule ([see Spectral ruleset](https://docs.stoplight.io/docs/spectral/4dec24461f3af-open-api-rules)), the description of the validation error, and the path to the field in the OpenAPI definition.
 
 ## Validation with @quobix/vacuum
 
@@ -60,7 +60,7 @@ npx @quobix/vacuum lint --details openapi.yaml
 
 Several validation errors will show up:
 ```
-openapi.yaml:812:5  | warning  | `securitySchemes` component `api_key` is missing a description                      | component-description      | Descriptions | $.components.securitySchemes['api_key']
+openapi.yaml:990:5   | warning  | `schemas` component `Problem` is missing a description   | component-description  | Descriptions | $.components.schemas['Problem']                                                                   
 ```
 They always contain the line, the severity, a description of the validation error, the name of the rule, the category, and the path to the field in the OpenAPI definition.
 
