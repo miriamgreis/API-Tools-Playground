@@ -3,7 +3,7 @@
 This repository can be used to try out some tools for OpenAPI.
 Right now it contains examples for mocking, validation, formatting and contract testing.
 We use all tools via `npx`, so you only need `npm` to run the examples.
-As sample API, we use the Swagger Petstore API.
+As sample API, we use the bump.sh Train Travel API.
 
 Just copy the commands to your terminal in the root folder of the repository and get started.
 
@@ -15,12 +15,12 @@ It additionally offers a validation proxy to add contract testing to existing te
 ### Execution for Mocking
 
 Execute the following command to start the mock server:
-```
+```sh
 npx @stoplight/prism-cli mock openapi.yaml
 ```
 
 In another terminal (or any other tool of your choice), you can now call the mock server:
-```
+```sh
 curl http://127.0.0.1:4010/stations --header "Authorization: Bearer 1234"
 ```
 
@@ -34,7 +34,7 @@ You can use a recommended ruleset and write custom rules on top.
 ### Execution
 
 Execute the following command to validate the OpenAPI definition:
-```
+```sh
 npx @stoplight/spectral-cli lint openapi.yaml
 ```
 `openapi.yaml` is the name of the OpenAPI file of our example in the repository.
@@ -53,7 +53,7 @@ It is inspired by Spectral and compatible with custom Spectral rulesets.
 ### Execution
 
 Execute the following command to validate the OpenAPI definition:
-```
+```sh
 npx @quobix/vacuum lint --details openapi.yaml
 ```
 `openapi.yaml` is the name of the OpenAPI file of our example in the repository.
@@ -78,7 +78,7 @@ This helps to create a more clean and optimizied OpenAPI file for public documen
 ### Execution
 
 Execute the following command to sort your OpenAPI file by applying the default sort order of the tool:
-```
+```sh
 npx openapi-format openapi.yaml --output openapi_formatted.yaml
 ```
 Compare the two files to check for the changes.
@@ -87,15 +87,15 @@ Compare the two files to check for the changes.
 
 Create a new file in the root folder of this repository called `customFilter.yaml`. 
 Then, add the following content to the file:
-```
+```yaml
 flags:
   - x-internal
 ```
 
 Open your OpenAPI file and place the `x-internal: true` flag on different elements. 
 Then run:
-```
-npx openapi-format openapi.yaml --output openapi_formated.yaml --filterFile customFilter.yaml
+```sh
+npx openapi-format openapi.yaml --output openapi_formatted.yaml --filterFile customFilter.yaml
 ```
 
 The newly formatted file should not contain any of the flagged elements.
@@ -120,13 +120,13 @@ Newman is the command-line runner from Postman and runs the tests in the generat
 ### Execution for Validation
 
 Execute the following command to generate the Postman collection including tests.
-```
+```sh
 npx @apideck/portman --local openapi.yaml --portmanConfigFile portman-test-config.json --output postmanCollection.json
 ```
 
 `openapi.yaml` is the name of the OpenAPI file, `portman-test-config.json` is the name of the configuration file for the tests, and `postmanCollection.json` is the name of the generated postman collection.
 Run the contract test by passing the name of the generated postman collection:
-```
+```sh
 npx newman run postmanCollection.json --verbose
 ```
 
@@ -158,11 +158,11 @@ We can also extract the ID from the entity created in the contract test by repla
 ```json
 "assignVariables": [
     {
-        "openApiOperation": "POST::/pet",
+        "openApiOperation": "POST::/bookings",
         "collectionVariables": [
             {
                 "responseBodyProp": "id",
-                "name": "petId"
+                "name": "bookingId"
             }
         ]
     }
@@ -174,8 +174,8 @@ To pass this variable to other operations, we can use the `keyValueReplacements`
 We can replace the currently empty configuration with the following one:
 ```json
 "keyValueReplacements": {
-    "petId": "{{petId}}"
-}
+    "bookingId": "{{bookingId}}"
+},
 ```
 All keys with the name `petId` get the value of the Postman variable `petId`.
 
@@ -187,8 +187,8 @@ and the `petId` is passed on to the next operations.
 Pick one operation with failing tests and explore why the tests are failing.
 Usually, it is easy to fix most of the contract test errors because we know the API which we are testing very well.
 Knowing the expected behavior, we can quickly spot what's going wrong.
-This is not the case for the Swagger Petstore API.
-To better understand the errors, it is helpful to open the Swagger Petstore API in the [Swagger Editor](https://editor.swagger.io) and experiment with the tryout to understand the expected behavior of the operations.
+This is not the case for the bump.sh Train Travel API.
+To better understand the errors, it is helpful to open the OpenAPI specification in the [Swagger Editor](https://editor.swagger.io) and experiment with the tryout to understand the expected behavior of the operations.
 Then try to correct the OpenAPI file to make the tests pass.
 
 ### Test Our Own API
@@ -202,7 +202,7 @@ This might be different, for APIs containing multiple server URLs or when we wan
 We can easily pass the `baseUrl` parameter to Portman to specify the concrete URL to use for the tests:
 
 ```
-npx @apideck/portman --local openapi.yaml --portmanConfigFile portman-test-config.json --baseUrl https://petstore3.swagger.io/api/v3 --output postmanCollection.json
+npx @apideck/portman --local openapi.yaml --portmanConfigFile portman-test-config.json --baseUrl https://try.microcks.io/rest/Train+Travel+API/1.0.0 --output postmanCollection.json
 ```
 
 #### Authorization
