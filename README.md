@@ -95,7 +95,7 @@ flags:
 Open your OpenAPI file and place the `x-internal: true` flag on different elements. 
 Then run:
 ```
-npx openapi-format openapi.yaml --output openapi_formated.yaml --filterFile customFilter.yaml
+npx openapi-format openapi.yaml --output openapi_filtered.yaml --filterFile customFilter.yaml
 ```
 
 The newly formatted file should not contain any of the flagged elements.
