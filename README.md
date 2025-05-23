@@ -54,7 +54,7 @@ It is inspired by Spectral and compatible with custom Spectral rulesets.
 
 Execute the following command to validate the OpenAPI definition:
 ```
-npx @quobix/vacuum@latest lint --details openapi.yaml
+npx @quobix/vacuum lint --details openapi.yaml
 ```
 `openapi.yaml` is the name of the OpenAPI file of our example in the repository.
 
