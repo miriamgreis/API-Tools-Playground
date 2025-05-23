@@ -16,7 +16,7 @@ It additionally offers a validation proxy to add contract testing to existing te
 
 Execute the following command to start the mock server:
 ```
-npx @stoplight/prism-cli mock openapi.yaml
+npx @stoplight/prism-cli@latest mock openapi.yaml
 ```
 
 In another terminal (or any other tool of your choice), you can now call the mock server:
@@ -35,7 +35,7 @@ You can use a recommended ruleset and write custom rules on top.
 
 Execute the following command to validate the OpenAPI definition:
 ```
-npx @stoplight/spectral-cli lint openapi.yaml
+npx @stoplight/spectral-cli@latest lint openapi.yaml
 ```
 `openapi.yaml` is the name of the OpenAPI file of our example in the repository.
 
@@ -54,7 +54,7 @@ It is inspired by Spectral and compatible with custom Spectral rulesets.
 
 Execute the following command to validate the OpenAPI definition:
 ```
-npx @quobix/vacuum lint --details openapi.yaml
+npx @quobix/vacuum@latest lint --details openapi.yaml
 ```
 `openapi.yaml` is the name of the OpenAPI file of our example in the repository.
 
@@ -79,7 +79,7 @@ This helps to create a more clean and optimizied OpenAPI file for public documen
 
 Execute the following command to sort your OpenAPI file by applying the default sort order of the tool:
 ```
-npx openapi-format openapi.yaml --output openapi_formatted.yaml
+npx openapi-format@latest openapi.yaml --output openapi_sorted.yaml
 ```
 Compare the two files to check for the changes.
 
@@ -95,7 +95,7 @@ flags:
 Open your OpenAPI file and place the `x-internal: true` flag on different elements. 
 Then run:
 ```
-npx openapi-format openapi.yaml --output openapi_filtered.yaml --filterFile customFilter.yaml
+npx openapi-format@latest openapi.yaml --output openapi_filtered.yaml --filterFile customFilter.yaml
 ```
 
 The newly formatted file should not contain any of the flagged elements.
@@ -121,13 +121,13 @@ Newman is the command-line runner from Postman and runs the tests in the generat
 
 Execute the following command to generate the Postman collection including tests.
 ```
-npx @apideck/portman --local openapi.yaml --portmanConfigFile portman-test-config.json --output postmanCollection.json
+npx @apideck/portman@latest --local openapi.yaml --portmanConfigFile portman-test-config.json --output postmanCollection.json
 ```
 
 `openapi.yaml` is the name of the OpenAPI file, `portman-test-config.json` is the name of the configuration file for the tests, and `postmanCollection.json` is the name of the generated postman collection.
 Run the contract test by passing the name of the generated postman collection:
 ```
-npx newman run postmanCollection.json --verbose
+npx newman@latest run postmanCollection.json --verbose
 ```
 
 I always recommend to use the `--verbose` option because I find it helpful to identify the problems if the tests don't pass.
