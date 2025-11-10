@@ -1,0 +1,19 @@
+overlay: 1.0.0
+info:
+  title: Overlay Example
+  version: 1.0.0
+actions:
+  - target: '$'
+    update:
+      info:
+        x-custom-information: Needed later for publishing
+      paths:
+        '/pet/findByStatus':
+          get:
+            description: |
+              This is a very long and detailed description of the method.
+              It might contain a lot for more details about functionality:
+              - one 
+              - two
+              - three
+              And quite some text which might overload the OpenAPI document.

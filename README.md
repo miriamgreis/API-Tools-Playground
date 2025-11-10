@@ -37,19 +37,20 @@ npx @redocly/cli@latest bundle openapi_unbundled.yaml --remove-unused-components
 ```
 
 > [!NOTE] 
-> --remove-unused-components throws out any components that are not referenced inside your file.
+> The option `--remove-unused-components` throws out any components that are not referenced inside your file.
 
 @redocly/cli also has a nice stats command that lists a few facts about the OpenAPI file:
 ```
 npx @redocly/cli@latest stats openapi_bundled.yaml
 ```
+Compare the two files to see how the references were removed or bundled.
 
 ## Formatting with openapi-format
 
 [openapi-format](https://github.com/thim81/openapi-format) is a tool to order, format and filter fields in OpenAPI files. 
 This helps to create a more clean and optimized OpenAPI file for public documentation.
 
-### Execution
+### Sorting
 
 Execute the following command to sort your OpenAPI file by applying the default sort order of the tool:
 ```
@@ -57,7 +58,7 @@ npx openapi-format@latest openapi.yaml --output openapi_sorted.yaml
 ```
 Compare the two files to check for the changes.
 
-### Filtering Example
+### Filtering
 
 Create a new file in the root folder of this repository called `customFilter.yaml`. 
 Then, add the following content to the file:
@@ -76,6 +77,16 @@ The newly formatted file should not contain any of the flagged elements.
 
 You can use many other filter options, and also pass other command line options such as `--sortFile` for a custom sort order or `--casingFile` to specify case settings. 
 Check the documentation of the tool for more details.
+
+### OpenAPI Overlay
+
+The [Overlay Specification](https://spec.openapis.org/overlay/v1.0.0.html) defines how to document information that augment and modify an existing OpenAPI file.
+This is very helpful for adding additional fields or overwriting descriptions with more details.
+
+```
+npx openapi-format@latest openapi.yaml --no-sort  --output openapi_with_overlay.yaml --overlayFile openapi-overlay.yaml
+```
+Compare the two files to see how the overlays were applied.
 
 ## Validation with @stoplight/spectral-cli
 
