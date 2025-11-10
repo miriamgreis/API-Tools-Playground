@@ -5,7 +5,8 @@ Right now it contains examples for mocking, validation, formatting and contract 
 Most tools are used via `npx`, so you only need `npm` to run the examples.
 As sample API, we use the Swagger Petstore API.
 
-> [!NOTE] We use lots of different tools although some offer similar functionalities. However, not all of them provide the same level of details and error messages. That's why we use the tools that work best for use for the specific functionality.
+> [!NOTE]
+> We use lots of different tools although some offer similar functionalities. However, not all of them provide the same level of details and error messages. That's why we use the tools that work best for use for the specific functionality.
 
 Just copy the commands to your terminal in the root folder of the repository and get started.
 
@@ -35,7 +36,8 @@ Execute the following command to bundle the unbundled file:
 npx @redocly/cli@latest bundle openapi_unbundled.yaml --remove-unused-components --output openapi_bundled.yaml
 ```
 
-> [!NOTE] --remove-unused-components throws out any components that are not referenced inside your file.
+> [!NOTE] 
+> --remove-unused-components throws out any components that are not referenced inside your file.
 
 @redocly/cli also has a nice stats command that lists a few facts about the OpenAPI file:
 ```
@@ -126,7 +128,23 @@ In the best case, you shouldn't have any validation errors at the end.
 [oasdiff](https://github.com/oasdiff/oasdiff) is a tool to compare and detect breaking changes in OpenAPI definitions.
 Unfortunately, it doesn't offer an nmp package, so if you want to try it out check the installation option to either install it with Go, Brew or use the provided docker image.
 
+### Execution
 
+If you installed it locally, make a copy of the `openapi.yaml` called `openapi_changed.yaml` and make arbitrary changes.
+If you want to make a breaking change, you can for example add a required parameter or remove and endpoint completely.
+Then run:
+
+```
+oasdiff breaking --fail-on ERR openapi.yaml openapi_changed.yaml
+```
+
+> [!NOTE]
+> The `--fail-on` flag can also be set to `WARN` to already fail on warnings.
+
+If you want to receive a full changelog including non-breaking changes, you can run:
+```
+oasdiff changelog openapi.yaml openapi_changed.yaml
+```
 
 ## Contract Testing with @apideck/portman
 
