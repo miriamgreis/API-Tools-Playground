@@ -2,8 +2,10 @@
 
 This repository can be used to try out some tools for OpenAPI.
 Right now it contains examples for mocking, validation, formatting and contract testing.
-We use all tools via `npx`, so you only need `npm` to run the examples.
+Most tools are used via `npx`, so you only need `npm` to run the examples.
 As sample API, we use the Swagger Petstore API.
+
+> [!NOTE] We use lots of different tools although some offer similar functionalities. However, not all of them provide the same level of details and error messages. That's why we use the tools that work best for use for the specific functionality.
 
 Just copy the commands to your terminal in the root folder of the repository and get started.
 
@@ -23,6 +25,55 @@ In another terminal (or any other tool of your choice), you can now call the moc
 ```
 curl http://127.0.0.1:4010/pet/1 --header "Authorization: Bearer 1234"
 ```
+
+## Bundling with @redocly/cli
+
+[Redocly CLI](https://github.com/Redocly/redocly-cli) is a tool for working with OpenAPI files including API linting, enhancement, and bundling.
+
+Execute the following command to bundle the unbundled file:
+```
+npx @redocly/cli@latest bundle openapi_unbundled.yaml --remove-unused-components --output openapi_bundled.yaml
+```
+
+> [!NOTE] --remove-unused-components throws out any components that are not referenced inside your file.
+
+@redocly/cli also has a nice stats command that lists a few facts about the OpenAPI file:
+```
+npx @redocly/cli@latest stats openapi_bundled.yaml
+```
+
+## Formatting with openapi-format
+
+[openapi-format](https://github.com/thim81/openapi-format) is a tool to order, format and filter fields in OpenAPI files. 
+This helps to create a more clean and optimized OpenAPI file for public documentation.
+
+### Execution
+
+Execute the following command to sort your OpenAPI file by applying the default sort order of the tool:
+```
+npx openapi-format@latest openapi.yaml --output openapi_sorted.yaml
+```
+Compare the two files to check for the changes.
+
+### Filtering Example
+
+Create a new file in the root folder of this repository called `customFilter.yaml`. 
+Then, add the following content to the file:
+```
+flags:
+  - x-internal
+```
+
+Open your OpenAPI file and place the `x-internal: true` flag on different elements. 
+Then run:
+```
+npx openapi-format@latest openapi.yaml --output openapi_filtered.yaml --filterFile customFilter.yaml
+```
+
+The newly formatted file should not contain any of the flagged elements.
+
+You can use many other filter options, and also pass other command line options such as `--sortFile` for a custom sort order or `--casingFile` to specify case settings. 
+Check the documentation of the tool for more details.
 
 ## Validation with @stoplight/spectral-cli
 
@@ -70,38 +121,12 @@ Start with one of the validation errors and try to identify the wrong field in t
 Fix the validation error and run the validation again.
 In the best case, you shouldn't have any validation errors at the end.
 
-## Formatting with openapi-format
+## Breaking changes with oasdiff
 
-[openapi-format](https://github.com/thim81/openapi-format) is a tool to order, format and filter fields in OpenAPI files. 
-This helps to create a more clean and optimizied OpenAPI file for public documentation.
+[oasdiff](https://github.com/oasdiff/oasdiff) is a tool to compare and detect breaking changes in OpenAPI definitions.
+Unfortunately, it doesn't offer an nmp package, so if you want to try it out check the installation option to either install it with Go, Brew or use the provided docker image.
 
-### Execution
 
-Execute the following command to sort your OpenAPI file by applying the default sort order of the tool:
-```
-npx openapi-format@latest openapi.yaml --output openapi_sorted.yaml
-```
-Compare the two files to check for the changes.
-
-### Filtering Example
-
-Create a new file in the root folder of this repository called `customFilter.yaml`. 
-Then, add the following content to the file:
-```
-flags:
-  - x-internal
-```
-
-Open your OpenAPI file and place the `x-internal: true` flag on different elements. 
-Then run:
-```
-npx openapi-format@latest openapi.yaml --output openapi_filtered.yaml --filterFile customFilter.yaml
-```
-
-The newly formatted file should not contain any of the flagged elements.
-
-You can use many other filter options, and also pass other command line options such as `--sortFile` for a custom sort order or `--casingFile` to specify case settings. 
-Check the documentation of the tool for more details.
 
 ## Contract Testing with @apideck/portman
 
