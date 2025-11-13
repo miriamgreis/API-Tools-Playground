@@ -8,7 +8,7 @@ actions:
       info:
         x-custom-information: Needed later for publishing
       paths:
-        '/pet/findByStatus':
+        '/pet/findByTags':
           get:
             description: |
               This is a very long and detailed description of the method.
