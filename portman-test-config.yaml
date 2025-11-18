@@ -1,0 +1,22 @@
+version: 1
+tests:
+  contractTests:
+    # The first * means match any request type, ie: GET, POST, etc..
+    # The second * means match any endpoint
+    - openApiOperation: "*::/*"
+      statusSuccess:
+        enabled: true
+      statusCode:
+        enabled: true
+      responseTime:
+        enabled: true
+        maxMs: 1000
+      contentType:
+        enabled: true
+      jsonBody:
+        enabled: true
+      schemaValidation:
+        enabled: true
+        additionalProperties: false
+      headersPresent:
+        enabled: true
