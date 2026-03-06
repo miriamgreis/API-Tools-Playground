@@ -27,6 +27,20 @@ In another terminal (or any other tool of your choice), you can now call the moc
 curl http://127.0.0.1:4010/pet/1 --header "Authorization: Bearer 1234"
 ```
 
+or via Inspectr (https://inspectr.dev/docs/features/mocking/)
+
+```
+npx @inspectr/inspectr@latest --mock-backend=openapi.yaml
+```
+
+open [http://](http://localhost:4004) to view all incoming requests/responses
+
+and next trigger the Mock service
+
+```
+curl http://localhost:8080/pet/1 --header "Authorization: Bearer 1234"
+```
+
 ## Bundling with @redocly/cli
 
 [Redocly CLI](https://github.com/Redocly/redocly-cli) is a tool for working with OpenAPI files including API linting, enhancement, and bundling.
@@ -49,6 +63,9 @@ Compare the two files to see how the references were removed or bundled.
 
 [openapi-format](https://github.com/thim81/openapi-format) is a tool to order, format and filter fields in OpenAPI files. 
 This helps to create a more clean and optimized OpenAPI file for public documentation.
+
+> [!NOTE]
+> openapi-format by default will [bundle](https://github.com/thim81/openapi-format?tab=readme-ov-file#bundling-the-openapi-document) your OpenAPI document 
 
 ### Sorting
 
